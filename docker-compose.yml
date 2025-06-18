@@ -1,0 +1,17 @@
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: spotify-mongodb
+    restart: unless-stopped # ← Changed
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: spotify-clone
+    command: ["--replSet", "rs0"]  # ← Enable replica set
+    volumes:
+      - mongodb_data:/data/db # ← Persistent storage
+
+volumes:
+  mongodb_data: # ← Data persists herew

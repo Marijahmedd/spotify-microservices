@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+
+
+
+model User {
+  id String @id @default(cuid()) @map("_id")  // Maps to MongoDB's _id
+  email String @unique
+  password String
+  tokenVersion Int @default(0)
+  verified Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  verificationToken EmailVerificationToken?
+  
+  @@map("users")  // Maps to collection name
+}
+
+model EmailVerificationToken {
+  id String @id @default(cuid()) @map("_id")
+  userId String @unique
+  token String @unique
+  user User @relation(fields: [userId], references: [id])
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  
+  @@map("email_verification_tokens")
+}
