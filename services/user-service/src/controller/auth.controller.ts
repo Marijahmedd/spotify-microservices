@@ -29,7 +29,7 @@ export const register = async (req: Request, res: Response) => {
           password: HashedPassword,
         },
       });
-      console.log("✅ User created successfully:", newUser.id);
+      console.log("✅ User created successfully:", newUser.email);
     } catch (createError: any) {
       console.error("❌ Error creating user:", createError);
 
@@ -81,11 +81,9 @@ export const register = async (req: Request, res: Response) => {
       res.status(500).json({ error: "verification mail error" });
       return;
     }
+
     res.status(201).json({
-      message: "user Created successfully ",
-      newUser,
-      storeToken,
-      verificationMail,
+      message: "user created successfully",
     });
     return;
   } catch (error) {
@@ -181,6 +179,7 @@ export async function login(req: Request, res: Response) {
         sub: user.id,
         isVerified: user.verified,
         email: user.email,
+        role: user.role,
       },
       privateKey,
       {

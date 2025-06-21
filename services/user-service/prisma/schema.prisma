@@ -17,20 +17,23 @@ datasource db {
 
 
 model User {
-  id String @id @default(cuid()) @map("_id")  // Maps to MongoDB's _id
+  id String @id @default(cuid()) @map("_id")  
   email String @unique
   password String
+  role String @default("user")
+  playlists String[] 
   tokenVersion Int @default(0)
   verified Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   verificationToken EmailVerificationToken?
   
-  @@map("users")  // Maps to collection name
+  @@map("users") 
 }
 
 model EmailVerificationToken {
   id String @id @default(cuid()) @map("_id")
+  
   userId String @unique
   token String @unique
   user User @relation(fields: [userId], references: [id])
