@@ -162,7 +162,6 @@ export async function login(req: Request, res: Response) {
       res.status(401).json({ error: "Incorrect email or password" });
       return;
     }
-
     const refreshToken = jwt.sign(
       {
         sub: user.id,
@@ -187,6 +186,14 @@ export async function login(req: Request, res: Response) {
         expiresIn: "15m",
       }
     );
+
+    const userData = {
+      sub: user.id,
+      isVerified: user.verified,
+      email: user.email,
+      role: user.role,
+    };
+
     res.cookie("refreshToken", refreshToken, {
       path: "/",
       httpOnly: true,
@@ -194,7 +201,9 @@ export async function login(req: Request, res: Response) {
       sameSite: "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.status(200).json({ message: "Successfully login", accessToken: token });
+    res
+      .status(200)
+      .json({ message: "Successfully login", userData, accessToken: token });
     return;
   } catch (error) {
     res.status(500).json({ error: "Internal error" });
@@ -378,11 +387,12 @@ export async function refreshAccessToken(req: Request, res: Response) {
       sub: user.id,
       isVerified: user.verified,
       email: user.email,
+      role: user.role,
     },
     privateKey,
     {
       algorithm: "RS256",
-      expiresIn: "1m", // ✅ Shorter duration
+      expiresIn: "15m", // ✅ Shorter duration
     }
   );
 

@@ -12,7 +12,7 @@ export interface AuthenticatedRequest extends Request {
   };
 }
 
-export async function RequireAuth(
+export async function RequireAdmin(
   req: Request,
   res: Response,
   next: NextFunction
@@ -35,6 +35,10 @@ export async function RequireAuth(
       "🕒 Token expires at:",
       new Date(decoded.exp * 1000).toISOString()
     );
+    if (decoded.role !== "admin") {
+      res.status(403).json({ error: "Admin only route" });
+      return;
+    }
 
     (req as AuthenticatedRequest).user = {
       id: decoded.sub,
