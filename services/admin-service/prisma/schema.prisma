@@ -6,10 +6,34 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+
+model Album {
+  id           String   @id @default(uuid())
+  name         String
+  artist       String
+  thumbnailKey String   
+  createdAt    DateTime @default(now())
+  songs        Song[]   // Will define later
+  @@map("album")
+}
+
+
+
+
+model Song {
+  id        String   @id @default(uuid())
+  title     String
+  artist    String
+  audioKey  String    // Required S3 key for the song file
+  duration  Float     // In seconds
+  albumId   String
+  album     Album    @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
 }

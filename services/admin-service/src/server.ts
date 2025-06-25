@@ -20,6 +20,7 @@ if (!process.env.PUBLIC_KEY) {
 //     credentials: true,
 //   })
 // );
+
 server.use(cookieParser());
 server.use(app); // ✅ CORRECT — using the app instance (with all routes and middleware)
 
