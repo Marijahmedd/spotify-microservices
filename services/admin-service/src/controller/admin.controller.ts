@@ -175,8 +175,8 @@ export const createSong = async (req: Request, res: Response) => {
       return;
     }
     if (!audioKey.startsWith("songs/")) {
-       res.status(400).json({ message: "Invalid audioKey path" });
-       return;
+      res.status(400).json({ message: "Invalid audioKey path" });
+      return;
     }
     // Ensure the album exists
     const album = await prisma.album.findUnique({ where: { id: albumId } });
@@ -220,7 +220,6 @@ export const getSongsOfAlbums = async (req: Request, res: Response) => {
         title: true,
         artist: true,
         duration: true,
-        audioKey: true,
         createdAt: true,
       },
     });
