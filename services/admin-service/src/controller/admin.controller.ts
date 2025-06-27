@@ -1,7 +1,7 @@
 import { s3Client } from "../utils/s3";
 import { prisma } from "../lib/dbConnect";
 import { Request, Response } from "express";
-
+import { publishEvent } from "../utils/pubsub";
 export const test = async (req: Request, res: Response) => {
   res.status(201).json({
     message: "api working correctly",
@@ -128,7 +128,9 @@ export const createAlbum = async (req: Request, res: Response) => {
         thumbnailKey,
       },
     });
-
+    await publishEvent("album:created", {
+      albumId: newAlbum.id,
+    });
     res.status(201).json({ message: "Album created", album: newAlbum });
     return;
   } catch (err) {
@@ -156,7 +158,9 @@ export const deleteAlbum = async (req: Request, res: Response) => {
     await prisma.album.delete({
       where: { id: albumId },
     });
-
+    await publishEvent("album:deleted", {
+      albumId: albumId,
+    });
     res.status(200).json({ message: "Album and its songs deleted" });
     return;
   } catch (error) {
@@ -194,7 +198,10 @@ export const createSong = async (req: Request, res: Response) => {
         albumId,
       },
     });
-
+    await publishEvent("song:created", {
+      songId: song.id,
+      albumId: song.albumId,
+    });
     res.status(201).json({ message: "Song created", song });
     return;
   } catch (err) {
@@ -204,6 +211,35 @@ export const createSong = async (req: Request, res: Response) => {
   }
 };
 
+export const deleteSong = async (req: Request, res: Response) => {
+  const songId = req.params.id;
+
+  try {
+    // Check if album exists
+    const song = await prisma.song.findUnique({
+      where: { id: songId },
+    });
+
+    if (!song) {
+      res.status(404).json({ message: "Song not found" });
+      return;
+    }
+
+    // Delete the album — songs will cascade delete
+    await prisma.song.delete({
+      where: { id: songId },
+    });
+    await publishEvent("song:deleted", {
+      songId: songId,
+    });
+    res.status(200).json({ message: "Song deleted" });
+    return;
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+    return;
+  }
+};
 export const getSongsOfAlbums = async (req: Request, res: Response) => {
   const albumId = req.params.id;
   const album = await prisma.album.findUnique({ where: { id: albumId } });

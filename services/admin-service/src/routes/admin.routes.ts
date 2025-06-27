@@ -8,6 +8,7 @@ import {
   test,
   testS3,
   uploadURL,
+  deleteSong,
 } from "../controller/admin.controller";
 export const adminRouter = express.Router();
 
@@ -20,4 +21,5 @@ adminRouter.post("/album", createAlbum);
 adminRouter.delete("/album/:id", deleteAlbum);
 
 adminRouter.post("/song", createSong);
+adminRouter.delete("/song/:id", deleteSong);
 adminRouter.get("/album/:id/song", getSongsOfAlbums);
