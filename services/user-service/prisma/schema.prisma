@@ -13,9 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
-
 model User {
   id String @id @default(cuid()) @map("_id")  
   email String @unique
@@ -26,6 +23,7 @@ model User {
   verified Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+    favorites   Favorite[]   
   verificationToken EmailVerificationToken?
   
   @@map("users") 
@@ -41,4 +39,21 @@ model EmailVerificationToken {
   createdAt DateTime @default(now())
   
   @@map("email_verification_tokens")
+}
+
+
+
+
+
+
+model Favorite {
+  id        String   @id @default(cuid()) @map("_id")
+  userId    String
+  songId    String   // Stored as string (UUID from Postgres service)
+  addedAt   DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("favorites")
+@@unique([userId, songId], name: "user_song_unique")
 }

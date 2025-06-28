@@ -6,6 +6,99 @@ import { registrationSchema, passwordRecoverySchema } from "../lib/validation";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { sendPasswordEmail } from "../lib/sendPasswordEmail";
+import { AuthenticatedRequest } from "../middleware/auth";
+
+export const addToFavorites = async (req: Request, res: Response) => {
+  const userId = (req as AuthenticatedRequest).user.id;
+  const { songId } = req.body;
+  if (!songId) {
+    res.status(400).json({ error: "Missing songId" });
+    return;
+  }
+  try {
+    // Check if already favorited  const { songId } = req.body;
+    const existing = await prisma.favorite.findUnique({
+      where: {
+        user_song_unique: { userId, songId },
+      },
+    });
+
+    if (existing) {
+      res.status(409).json({ message: "Song already in favorites" });
+      return;
+    }
+
+    // Add to favorites
+    const favorite = await prisma.favorite.create({
+      data: {
+        userId,
+        songId,
+      },
+    });
+
+    res.status(201).json({ message: "Added to favorites", favorite });
+    return;
+  } catch (error) {
+    console.error("Error adding to favorites:", error);
+    res.status(500).json({ error: "Internal server error" });
+    return;
+  }
+};
+
+export const removeFromFavorites = async (req: Request, res: Response) => {
+  const userId = (req as AuthenticatedRequest).user.id;
+  const { songId } = req.body;
+  if (!songId) {
+    res.status(400).json({ error: "Missing songId" });
+    return;
+  }
+  try {
+    // Check if already favorited  const { songId } = req.body;
+    const existing = await prisma.favorite.findUnique({
+      where: {
+        user_song_unique: { userId, songId },
+      },
+    });
+
+    if (!existing) {
+      res.status(409).json({ message: "This song is not favorite" });
+      return;
+    }
+
+    // Add to favorites
+    await prisma.favorite.delete({
+      where: {
+        user_song_unique: { userId, songId },
+      },
+    });
+
+    res.status(201).json({ message: "removed from favorites" });
+    return;
+  } catch (error) {
+    console.error("Error removing from favorites:", error);
+    res.status(500).json({ error: "Internal server error" });
+    return;
+  }
+};
+
+export const getUserFavorites = async (req: Request, res: Response) => {
+  const userId = (req as AuthenticatedRequest).user.id;
+  try {
+    const favorites = await prisma.favorite.findMany({
+      where: {
+        userId,
+      },
+    });
+
+    res.status(201).json({ favorites });
+    return;
+  } catch (error) {
+    console.error("Error fetching favorites:", error);
+    res.status(500).json({ error: "Internal server error" });
+    return;
+  }
+};
+
 export const register = async (req: Request, res: Response) => {
   try {
     const parsed = registrationSchema.safeParse(req.body);

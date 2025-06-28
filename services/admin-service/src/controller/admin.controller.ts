@@ -231,6 +231,7 @@ export const deleteSong = async (req: Request, res: Response) => {
     });
     await publishEvent("song:deleted", {
       songId: songId,
+      albumId: song.albumId,
     });
     res.status(200).json({ message: "Song deleted" });
     return;

@@ -4,10 +4,12 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import songRoutes from "./routes/songs.routes";
+import { registerRedisSubscriptions } from "./redis/subscriptions";
 
 const fastify = Fastify({ logger: true });
 
 // Register Routes
+registerRedisSubscriptions();
 fastify.register(songRoutes, { prefix: "/api/song" });
 
 const start = async () => {

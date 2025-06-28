@@ -4,6 +4,7 @@ import {
   getAlbums,
   getAlbumData,
   getAllSongs,
+  getSongData,
 } from "../controller/songs.controller";
 
 export default async function songRoutes(fastify: FastifyInstance) {
@@ -11,4 +12,5 @@ export default async function songRoutes(fastify: FastifyInstance) {
   fastify.get("/album", getAlbums);
   fastify.get("/album/:id", getAlbumData);
   fastify.get("/", getAllSongs);
+  // fastify.get("/:id", getSongData);
 }

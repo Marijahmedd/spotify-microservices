@@ -11,11 +11,11 @@ export const streamSong = async (
   let audioKey: string;
 
   try {
-    const cachedKey = await redis.get(`song:${id}`);
+    const cachedKey = await redis.get(`stream:${id}`);
 
     if (cachedKey) {
       audioKey = cachedKey;
-      console.log("✅ Cache hit for song:", id);
+      console.log("✅ Cache hit for streaming of song:", id);
     } else {
       console.log("❌ Cache miss, querying DB...");
       const song = await prisma.song.findUnique({ where: { id } });
@@ -25,7 +25,7 @@ export const streamSong = async (
       }
 
       audioKey = song.audioKey;
-      await redis.set(`song:${id}`, audioKey, "EX", 12 * 60 * 60);
+      await redis.set(`stream:${id}`, audioKey, "EX", 12 * 60 * 60);
     }
 
     const signedUrl = generateSignedCloudFrontUrl(audioKey);
@@ -122,6 +122,35 @@ export const getAlbumData = async (
     await redis.set(cacheKey, JSON.stringify(response), "EX", 600); // cache for 10 minutes
 
     return reply.send(response);
+  } catch (error) {
+    console.error("Error fetching album:", error);
+    return reply.status(500).send({ message: "Internal server error" });
+  }
+};
+
+export const getSongData = async (
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  const { id } = request.params as { id: string };
+
+  try {
+    const song = await prisma.song.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        title: true,
+        artist: true,
+        duration: true,
+        createdAt: true,
+      },
+    });
+
+    if (!song) {
+      return reply.status(404).send({ message: "song not found" });
+    }
+
+    return reply.send(song);
   } catch (error) {
     console.error("Error fetching album:", error);
     return reply.status(500).send({ message: "Internal server error" });

@@ -9,24 +9,31 @@ import {
   validateToken,
   refreshAccessToken,
   logout,
+  addToFavorites,
+  removeFromFavorites,
+  getUserFavorites,
 } from "../controller/auth.controller";
 import { AuthenticatedRequest, RequireAuth } from "../middleware/auth";
-export const authRouter = express.Router();
+export const userRouter = express.Router();
 
-authRouter.post("/register", register);
-authRouter.post("/login", login);
+userRouter.post("/favorites", RequireAuth, addToFavorites);
+userRouter.delete("/favorites", RequireAuth, removeFromFavorites);
+userRouter.get("/favorites", RequireAuth, getUserFavorites);
 
-authRouter.post("/verify-email", verify);
+userRouter.post("/register", register);
+userRouter.post("/login", login);
 
-authRouter.post("/password-reset", recoverPassword);
+userRouter.post("/verify-email", verify);
 
-authRouter.post("/set-password", setPassword);
+userRouter.post("/password-reset", recoverPassword);
 
-authRouter.get("/validate-token", validateToken);
-authRouter.post("/refresh-token", refreshAccessToken);
-authRouter.post("/logout", logout);
+userRouter.post("/set-password", setPassword);
 
-authRouter.get("/check-auth", RequireAuth, (req, res: Response) => {
+userRouter.get("/validate-token", validateToken);
+userRouter.post("/refresh-token", refreshAccessToken);
+userRouter.post("/logout", logout);
+
+userRouter.get("/check-auth", RequireAuth, (req, res: Response) => {
   res
     .status(200)
     .json({ message: "success", user: (req as AuthenticatedRequest).user });
