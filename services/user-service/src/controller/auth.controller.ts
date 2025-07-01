@@ -7,6 +7,7 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { sendPasswordEmail } from "../lib/sendPasswordEmail";
 import { AuthenticatedRequest } from "../middleware/auth";
+import { enqueueEmailJob } from "../lib/sqs";
 
 export const addToFavorites = async (req: Request, res: Response) => {
   const userId = (req as AuthenticatedRequest).user.id;
@@ -166,9 +167,8 @@ export const register = async (req: Request, res: Response) => {
       res.status(400).json({ error: "error storing token to db" });
       return;
     }
-    let verificationMail = null;
     try {
-      verificationMail = await sendVerificationEmail(email, token);
+      await enqueueEmailJob("verify", email, token);
     } catch (verificationMailError) {
       console.log("verification mail error", verificationMailError);
       res.status(500).json({ error: "verification mail error" });
@@ -350,7 +350,8 @@ export async function recoverPassword(req: Request, res: Response) {
           expiresAt: new Date(Date.now() + 1000 * 60 * 60),
         },
       });
-      await sendPasswordEmail(user.email, token);
+      // await sendPasswordEmail(user.email, token);
+      await enqueueEmailJob("reset", email, token);
 
       res.status(200).json({ message: "Reset password link sent to the mail" });
       return;

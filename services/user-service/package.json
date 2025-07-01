@@ -13,6 +13,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@aws-sdk/client-sqs": "^3.840.0",
     "@prisma/client": "^6.5.0",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
