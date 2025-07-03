@@ -1,44 +1,38 @@
 import { useForm } from "react-hook-form";
-import { useUserStore } from "@/store/useUserStore";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { Eye, EyeOff, Music } from "lucide-react";
+import { usersApi } from "@/api/usersApi";
 
-type LoginFormInputs = {
+type RegisterFormInputs = {
   email: string;
   password: string;
 };
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-
-  // Your exact useUserStore and navigate logic would go here
   const navigate = useNavigate();
-  const login = useUserStore((s) => s.login);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<LoginFormInputs>();
+  } = useForm<RegisterFormInputs>();
 
-  const onSubmit = async (data: LoginFormInputs) => {
+  const onSubmit = async (data: RegisterFormInputs) => {
     try {
-      await login(data.email, data.password);
-      toast.success("Logged in successfully!");
-      const role = useUserStore.getState().user?.role;
-      if (role === "admin") navigate("/admin");
-      else navigate("/");
+      const res = await usersApi.post("/register", data);
+      toast.success("Registered successfully!");
+      navigate("/login");
     } catch (err: any) {
-      toast.error(err?.response?.data?.error || "Invalid email or password");
+      toast.error(err?.response?.data?.error || "Registration failed");
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-zinc-900 to-neutral-950 flex items-center justify-center p-4">
       <div className="w-full max-w-md animate-fade-in">
-        {/* Spotify Logo */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-4">
             <div className="p-3 bg-green-500 rounded-full animate-pulse-slow">
@@ -46,24 +40,23 @@ const LoginPage = () => {
             </div>
           </div>
           <h1 className="text-white text-3xl font-bold mb-2 animate-slide-up">
-            Log in to Spotify
+            Sign up for Spotify
           </h1>
         </div>
 
         <div className="bg-white/5 backdrop-blur-md border border-white/10 ring-1 ring-white/5 rounded-2xl shadow-2xl p-8 animate-slide-up-delayed">
           <div className="space-y-6">
-            {/* Email Input */}
             <div className="space-y-2">
               <label
                 htmlFor="email"
                 className="text-white text-sm font-medium block"
               >
-                Email or username
+                Email
               </label>
               <input
                 id="email"
                 type="email"
-                placeholder="Email or username"
+                placeholder="Enter your email"
                 className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 h-12 px-4 rounded-md focus:border-green-500 focus:ring-2 focus:ring-green-500/20 focus:outline-none transition-all duration-300 hover:border-zinc-600"
                 {...register("email", {
                   required: "Email is required",
@@ -80,7 +73,6 @@ const LoginPage = () => {
               )}
             </div>
 
-            {/* Password Input */}
             <div className="space-y-2">
               <label
                 htmlFor="password"
@@ -92,7 +84,7 @@ const LoginPage = () => {
                 <input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Password"
+                  placeholder="Enter your password"
                   className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 h-12 px-4 pr-12 rounded-md focus:border-green-500 focus:ring-2 focus:ring-green-500/20 focus:outline-none transition-all duration-300 hover:border-zinc-600"
                   {...register("password", {
                     required: "Password is required",
@@ -121,7 +113,6 @@ const LoginPage = () => {
               )}
             </div>
 
-            {/* Login Button */}
             <button
               type="submit"
               disabled={isSubmitting}
@@ -131,97 +122,49 @@ const LoginPage = () => {
               {isSubmitting ? (
                 <div className="flex items-center justify-center">
                   <div className="animate-spin rounded-full h-5 w-5 border-2 border-black border-t-transparent mr-2"></div>
-                  Logging in...
+                  Signing up...
                 </div>
               ) : (
-                "Log In"
+                "Sign Up"
               )}
             </button>
 
-            {/* Forgot Password Link */}
             <div className="text-center">
               <button
                 type="button"
-                onClick={() => {
-                  navigate("/forgot-password");
-                }} // navigate("/forgot-password")
+                onClick={() => navigate("/login")}
                 className="text-zinc-400 text-sm underline hover:text-green-400 transition-colors duration-200"
               >
-                Forgot your password?
+                Already have an account?
               </button>
             </div>
           </div>
-        </div>
-
-        {/* Sign Up Link */}
-        <div className="text-center mt-8 animate-fade-in-late">
-          <p className="text-zinc-400 text-sm">
-            Don't have an account?{" "}
-            <button
-              onClick={() => {
-                navigate("/register");
-              }} // navigate("/register")
-              className="text-white underline hover:text-green-400 transition-colors duration-200 font-medium"
-            >
-              Sign up for Spotify
-            </button>
-          </p>
         </div>
       </div>
 
       <style>{`
         @keyframes fade-in {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
 
         @keyframes slide-up {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes pulse-slow {
-          0%,
-          100% {
-            opacity: 1;
-          }
-          50% {
-            opacity: 0.8;
-          }
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.8; }
         }
 
-        .animate-fade-in {
-          animation: fade-in 0.6s ease-out;
-        }
-
-        .animate-slide-up {
-          animation: slide-up 0.7s ease-out;
-        }
-
-        .animate-slide-up-delayed {
-          animation: slide-up 0.7s ease-out 0.2s both;
-        }
-
-        .animate-fade-in-late {
-          animation: fade-in 0.6s ease-out 0.4s both;
-        }
-
-        .animate-pulse-slow {
-          animation: pulse-slow 2s ease-in-out infinite;
-        }
+        .animate-fade-in { animation: fade-in 0.6s ease-out; }
+        .animate-slide-up { animation: slide-up 0.7s ease-out; }
+        .animate-slide-up-delayed { animation: slide-up 0.7s ease-out 0.2s both; }
+        .animate-pulse-slow { animation: pulse-slow 2s ease-in-out infinite; }
       `}</style>
     </div>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
