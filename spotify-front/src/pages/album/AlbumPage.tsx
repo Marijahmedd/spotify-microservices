@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useMusicStore } from "@/store/useMusicStore";
-// import { usePlayerStore } from "@/store/usePlayerStore";
+import { usePlayerStore } from "@/store/usePlayerStore";
 import { Clock, Pause, Play } from "lucide-react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -15,7 +15,7 @@ export const formatDuration = (seconds: number) => {
 const AlbumPage = () => {
   const { albumId } = useParams();
   const { fetchAlbumById, currentAlbum, isLoading } = useMusicStore();
-  //   const { currentSong, isPlaying, playAlbum, togglePlay } = usePlayerStore();
+  const { currentSong, isPlaying, playAlbum, togglePlay } = usePlayerStore();
 
   useEffect(() => {
     if (albumId) fetchAlbumById(albumId);
@@ -25,20 +25,20 @@ const AlbumPage = () => {
 
   const handlePlayAlbum = () => {
     if (!currentAlbum) return;
-    // const isCurrentAlbumPlaying = currentAlbum?.songs.some(
-    //   (song) => song.id === currentSong?.id
-    // );
-    // if (isCurrentAlbumPlaying) togglePlay();
+    const isCurrentAlbumPlaying = currentAlbum?.songs.some(
+      (song) => song.id === currentSong?.id
+    );
+    if (isCurrentAlbumPlaying) togglePlay();
     else {
       // start playing the album from the beginning
-      //   playAlbum(currentAlbum?.songs, 0);
+      playAlbum(currentAlbum?.songs, 0);
     }
   };
 
   const handlePlaySong = (index: number) => {
     if (!currentAlbum) return;
 
-    // playAlbum(currentAlbum?.songs, index);
+    playAlbum(currentAlbum?.songs, index);
   };
 
   return (
@@ -83,14 +83,14 @@ const AlbumPage = () => {
                 className="w-14 h-14 rounded-full bg-green-500 hover:bg-green-400 
                 hover:scale-105 transition-all"
               >
-                {/* {isPlaying &&
+                {isPlaying &&
                 currentAlbum?.songs.some(
                   (song) => song.id === currentSong?.id
                 ) ? (
                   <Pause className="h-7 w-7 text-black" />
                 ) : (
                   <Play className="h-7 w-7 text-black" />
-                )} */}
+                )}
               </Button>
             </div>
 
@@ -114,9 +114,9 @@ const AlbumPage = () => {
               <div className="px-6">
                 <div className="space-y-2 py-4">
                   {currentAlbum?.songs.map((song, index) => {
-                    // const isCurrentSong = currentSong?.id === song.id;
-                    const isCurrentSong = false;
-                    const isPlaying = false; //remove this part this is for demo
+                    const isCurrentSong = currentSong?.id === song.id;
+                    // const isCurrentSong = false;
+                    // const isPlaying = false; //remove this part this is for demo
 
                     return (
                       <div

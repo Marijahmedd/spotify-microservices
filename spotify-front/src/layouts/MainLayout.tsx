@@ -6,8 +6,8 @@ import {
 import { Outlet } from "react-router-dom";
 import LeftSidebar from "./components/LeftSidebar";
 // import FriendsActivity from "./components/FriendsActivity";
-// import AudioPlayer from "./components/AudioPlayer";
-// import { PlaybackControls } from "./components/PlaybackControls";
+import AudioPlayer from "./components/AudioPlayer";
+import { PlaybackControls } from "./components/PlaybackControls";
 import { useEffect, useState } from "react";
 
 const MainLayout = () => {
@@ -29,7 +29,7 @@ const MainLayout = () => {
         direction="horizontal"
         className="flex-1 flex h-full overflow-hidden p-2"
       >
-        {/* <AudioPlayer /> */}
+        <AudioPlayer />
         {/* left sidebar */}
         <ResizablePanel
           defaultSize={20}
@@ -64,7 +64,7 @@ const MainLayout = () => {
         )}
       </ResizablePanelGroup>
 
-      {/* <PlaybackControls /> */}
+      <PlaybackControls />
     </div>
   );
 };
