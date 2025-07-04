@@ -276,7 +276,7 @@ export async function login(req: Request, res: Response) {
       privateKey,
       {
         algorithm: "RS256",
-        expiresIn: "15m",
+        expiresIn: "1m",
       }
     );
 
@@ -486,11 +486,12 @@ export async function refreshAccessToken(req: Request, res: Response) {
     privateKey,
     {
       algorithm: "RS256",
-      expiresIn: "15m", // ✅ Shorter duration
+      expiresIn: "1m", // ✅ Shorter duration
     }
   );
-
+  console.log("new token given");
   res.status(200).json({ accessToken: newAccessToken });
+  return;
 }
 
 export async function logout(req: Request, res: Response) {

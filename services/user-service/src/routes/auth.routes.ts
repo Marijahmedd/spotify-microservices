@@ -25,7 +25,7 @@ userRouter.post("/login", login);
 
 userRouter.post("/verify-email", verify);
 
-userRouter.post("/password-reset", recoverPassword);
+userRouter.post("/forgot-password", recoverPassword);
 
 userRouter.post("/set-password", setPassword);
 

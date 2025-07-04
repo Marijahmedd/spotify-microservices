@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,29 +7,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Album {
   id           String   @id @default(uuid())
   name         String
   artist       String
-  thumbnailKey String   
+  thumbnailKey String
   createdAt    DateTime @default(now())
-  songs        Song[]   // Will define later
+  songs        Song[]
+
   @@map("album")
 }
-
-
-
 
 model Song {
   id        String   @id @default(uuid())
   title     String
   artist    String
-  audioKey  String    // Required S3 key for the song file
-  duration  Float     // In seconds
+  audioKey  String
+  duration  Float
   albumId   String
+  createdAt DateTime @default(now())
+  imageUrl  String?
   album     Album    @relation(fields: [albumId], references: [id], onDelete: Cascade)
-  createdAt DateTime  @default(now())
-  @@map("song")
 
+  @@map("song")
 }

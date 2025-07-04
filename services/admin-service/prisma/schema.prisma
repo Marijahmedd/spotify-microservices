@@ -31,6 +31,7 @@ model Song {
   id        String   @id @default(uuid())
   title     String
   artist    String
+  imageUrl  String?
   audioKey  String    // Required S3 key for the song file
   duration  Float     // In seconds
   albumId   String

@@ -98,6 +98,7 @@ export const getAlbumData = async (
             title: true,
             artist: true,
             duration: true,
+            imageUrl: true,
             createdAt: true,
           },
           orderBy: { createdAt: "asc" },
@@ -139,6 +140,7 @@ export const getSongData = async (
       where: { id },
       select: {
         id: true,
+        imageUrl: true,
         title: true,
         artist: true,
         duration: true,
@@ -174,8 +176,10 @@ export const getAllSongs = async (req: FastifyRequest, reply: FastifyReply) => {
       orderBy: { createdAt: "desc" },
       select: {
         id: true,
+
         title: true,
         artist: true,
+        imageUrl: true,
         duration: true,
         audioKey: true,
         albumId: true,

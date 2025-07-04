@@ -172,7 +172,7 @@ export const deleteAlbum = async (req: Request, res: Response) => {
 
 export const createSong = async (req: Request, res: Response) => {
   try {
-    const { title, artist, audioKey, duration, albumId } = req.body;
+    const { title, artist, audioKey, duration, albumId, imageUrl } = req.body;
 
     if (!title || !artist || !audioKey || !duration || !albumId) {
       res.status(400).json({ message: "Missing required fields" });
@@ -196,6 +196,7 @@ export const createSong = async (req: Request, res: Response) => {
         audioKey,
         duration: parseFloat(duration),
         albumId,
+        imageUrl,
       },
     });
     await publishEvent("song:created", {
@@ -254,6 +255,7 @@ export const getSongsOfAlbums = async (req: Request, res: Response) => {
       orderBy: { createdAt: "asc" },
       select: {
         id: true,
+        imageUrl: true,
         title: true,
         artist: true,
         duration: true,

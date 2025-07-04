@@ -3,7 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import app from "./app";
 import cookieParser from "cookie-parser";
-
+import cors from "cors";
 dotenv.config();
 
 const server = express();
@@ -17,12 +17,14 @@ if (
   process.exit(1);
 }
 
-// server.use(
-//   cors({
-//     origin: `${process.env.BASE_URL}`,
-//     credentials: true,
-//   })
-// );
+server.use(
+  cors({
+    origin: `${process.env.BASE_URL}`,
+    credentials: true,
+  })
+);
+console.log("Allowed origin:", process.env.BASE_URL);
+
 server.use(cookieParser());
 server.use(app); // ✅ CORRECT — using the app instance (with all routes and middleware)
 
