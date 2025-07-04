@@ -2,12 +2,11 @@ export interface Song {
   id: string;
   title: string;
   artist: string;
-  albumId: string | null;
+  albumId: string;
   imageUrl: string;
-  audioUrl: string;
+  audioKey: string;
   duration: number;
   createdAt: string;
-  updatedAt: string;
 }
 
 export interface Album {

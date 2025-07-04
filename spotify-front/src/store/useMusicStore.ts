@@ -142,8 +142,9 @@ export const useMusicStore = create<MusicStore>((set) => ({
   fetchFeaturedSongs: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response = await usersApi.get("/songs/featured");
+      const response = await songsApi.get("/");
       set({ featuredSongs: response.data });
+      console.log(response);
     } catch (error: any) {
       set({ error: error.response.data.message });
     } finally {
@@ -154,7 +155,7 @@ export const useMusicStore = create<MusicStore>((set) => ({
   fetchMadeForYouSongs: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response = await usersApi.get("/songs/made-for-you");
+      const response = await songsApi.get("/");
       set({ madeForYouSongs: response.data });
     } catch (error: any) {
       set({ error: error.response.data.message });
@@ -166,7 +167,7 @@ export const useMusicStore = create<MusicStore>((set) => ({
   fetchTrendingSongs: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response = await usersApi.get("/songs/trending");
+      const response = await songsApi.get("/");
       set({ trendingSongs: response.data });
     } catch (error: any) {
       set({ error: error.response.data.message });
