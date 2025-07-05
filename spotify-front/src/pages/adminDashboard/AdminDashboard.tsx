@@ -22,9 +22,12 @@ import {
   Image,
   FileAudio,
   Loader2,
+  Home,
+  Ghost,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { adminApi } from "@/api/adminApi";
+import { Link } from "react-router-dom";
 
 const CLOUDFRONT_URL = import.meta.env.VITE_CLOUDFRONT_URL;
 
@@ -310,7 +313,13 @@ const AdminDashboard = () => {
       <div className="max-w-7xl mx-auto p-8">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2 flex items-center gap-3">
-            <Music className="text-green-400" />
+            <Link to="/">
+              <Button variant="outline" size="lg">
+                <Home />
+                Home
+              </Button>
+            </Link>
+            <img src="/spotify.png" className="size-8" alt="Spotify logo" />
             Spotify Admin Dashboard
           </h1>
           <p className="text-slate-300">Manage your music library with ease</p>

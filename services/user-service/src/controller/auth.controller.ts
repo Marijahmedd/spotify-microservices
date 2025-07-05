@@ -1,11 +1,9 @@
 import { prisma } from "../lib/dbConnect";
 import { comparePassword, hashPassword } from "../lib/hash";
-import { sendVerificationEmail } from "../lib/sendEmail";
 import { generateToken } from "../lib/token";
 import { registrationSchema, passwordRecoverySchema } from "../lib/validation";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { sendPasswordEmail } from "../lib/sendPasswordEmail";
 import { AuthenticatedRequest } from "../middleware/auth";
 import { enqueueEmailJob } from "../lib/sqs";
 
@@ -276,7 +274,7 @@ export async function login(req: Request, res: Response) {
       privateKey,
       {
         algorithm: "RS256",
-        expiresIn: "1m",
+        expiresIn: "15m",
       }
     );
 
@@ -307,7 +305,7 @@ export async function login(req: Request, res: Response) {
 export async function recoverPassword(req: Request, res: Response) {
   const parsed = passwordRecoverySchema.safeParse(req.body);
   if (!parsed.success) {
-    res.status(500).json({ error: "invalid email" });
+    res.status(400).json({ error: "invalid email" });
     return;
   }
   const { email } = parsed.data;
@@ -329,14 +327,14 @@ export async function recoverPassword(req: Request, res: Response) {
   try {
     const token = generateToken();
     if (!user.verificationToken) {
-      const createToken = await prisma.emailVerificationToken.create({
+      await prisma.emailVerificationToken.create({
         data: {
           userId: user.id,
           token,
           expiresAt: new Date(Date.now() + 1000 * 60 * 60),
         },
       });
-      await sendPasswordEmail(user.email, token);
+      await enqueueEmailJob("reset", email, token);
 
       res.status(200).json({ message: "Reset password link sent to the mail" });
       return;
@@ -486,7 +484,7 @@ export async function refreshAccessToken(req: Request, res: Response) {
     privateKey,
     {
       algorithm: "RS256",
-      expiresIn: "1m", // ✅ Shorter duration
+      expiresIn: "15m", // ✅ Shorter duration
     }
   );
   console.log("new token given");

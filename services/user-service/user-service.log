@@ -1,0 +1,126 @@
+
+> user-service@1.0.0 dev
+> ts-node-dev --respawn --transpile-only src/server.ts
+
+[INFO] 18:35:36 ts-node-dev ver. 2.0.0 (using ts-node ver. 10.9.2, typescript ver. 5.8.3)
+Allowed origin: http://localhost:5173
+Server is running on port 5000
+connection successful
+generating new access token
+new token given
+[INFO] 19:07:39 Restarting: /home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/controller/auth.controller.ts has been modified
+Allowed origin: http://localhost:5173
+Server is running on port 5000
+connection successful
+[INFO] 19:07:47 Restarting: /home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/controller/auth.controller.ts has been modified
+Allowed origin: http://localhost:5173
+Error: listen EADDRINUSE: address already in use :::5000
+    at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+    at listenInCluster (node:net:1996:12)
+    at Server.listen (node:net:2101:7)
+    at Function.listen (/home/baysick/Desktop/spotify/spotify-microservices/services/user-service/node_modules/express/lib/application.js:635:24)
+    at Object.<anonymous> (/home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/server.ts:33:8)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (/home/baysick/Desktop/spotify/spotify-microservices/services/user-service/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/tmp/ts-node-dev-hook-013350942041538083.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (/tmp/ts-node-dev-hook-013350942041538083.js:71:20)
+[ERROR] 19:07:48 Error: listen EADDRINUSE: address already in use :::5000
+[INFO] 19:07:50 Restarting: /home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/controller/auth.controller.ts has been modified
+Allowed origin: http://localhost:5173
+Server is running on port 5000
+connection successful
+[INFO] 01:55:55 Restarting: /home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/controller/auth.controller.ts has been modified
+Allowed origin: http://localhost:5173
+Server is running on port 5000
+connection successful
+[INFO] 01:57:39 Restarting: /home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/controller/auth.controller.ts has been modified
+Allowed origin: http://localhost:5173
+Server is running on port 5000
+connection successful
+[INFO] 01:58:00 Restarting: /home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/controller/auth.controller.ts has been modified
+Allowed origin: http://localhost:5173
+Error: listen EADDRINUSE: address already in use :::5000
+    at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+    at listenInCluster (node:net:1996:12)
+    at Server.listen (node:net:2101:7)
+    at Function.listen (/home/baysick/Desktop/spotify/spotify-microservices/services/user-service/node_modules/express/lib/application.js:635:24)
+    at Object.<anonymous> (/home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/server.ts:33:8)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (/home/baysick/Desktop/spotify/spotify-microservices/services/user-service/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/tmp/ts-node-dev-hook-013350942041538083.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (/tmp/ts-node-dev-hook-013350942041538083.js:71:20)
+[ERROR] 01:58:00 Error: listen EADDRINUSE: address already in use :::5000
+[INFO] 02:00:17 Restarting: /home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/controller/auth.controller.ts has been modified
+Allowed origin: http://localhost:5173
+Server is running on port 5000
+connection successful
+[INFO] 02:00:22 Restarting: /home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/controller/auth.controller.ts has been modified
+Allowed origin: http://localhost:5173
+Error: listen EADDRINUSE: address already in use :::5000
+    at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+    at listenInCluster (node:net:1996:12)
+    at Server.listen (node:net:2101:7)
+    at Function.listen (/home/baysick/Desktop/spotify/spotify-microservices/services/user-service/node_modules/express/lib/application.js:635:24)
+    at Object.<anonymous> (/home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/server.ts:33:8)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (/home/baysick/Desktop/spotify/spotify-microservices/services/user-service/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/tmp/ts-node-dev-hook-013350942041538083.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (/tmp/ts-node-dev-hook-013350942041538083.js:71:20)
+[ERROR] 02:00:22 Error: listen EADDRINUSE: address already in use :::5000
+[INFO] 02:00:24 Restarting: /home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/controller/auth.controller.ts has been modified
+Allowed origin: http://localhost:5173
+Server is running on port 5000
+connection successful
+[INFO] 02:00:27 Restarting: /home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/controller/auth.controller.ts has been modified
+Allowed origin: http://localhost:5173
+Error: listen EADDRINUSE: address already in use :::5000
+    at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+    at listenInCluster (node:net:1996:12)
+    at Server.listen (node:net:2101:7)
+    at Function.listen (/home/baysick/Desktop/spotify/spotify-microservices/services/user-service/node_modules/express/lib/application.js:635:24)
+    at Object.<anonymous> (/home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/server.ts:33:8)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (/home/baysick/Desktop/spotify/spotify-microservices/services/user-service/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/tmp/ts-node-dev-hook-013350942041538083.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (/tmp/ts-node-dev-hook-013350942041538083.js:71:20)
+[ERROR] 02:00:27 Error: listen EADDRINUSE: address already in use :::5000
+[INFO] 02:00:38 Restarting: /home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/controller/auth.controller.ts has been modified
+Allowed origin: http://localhost:5173
+Server is running on port 5000
+connection successful
+[INFO] 02:00:42 Restarting: /home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/controller/auth.controller.ts has been modified
+Allowed origin: http://localhost:5173
+Error: listen EADDRINUSE: address already in use :::5000
+    at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+    at listenInCluster (node:net:1996:12)
+    at Server.listen (node:net:2101:7)
+    at Function.listen (/home/baysick/Desktop/spotify/spotify-microservices/services/user-service/node_modules/express/lib/application.js:635:24)
+    at Object.<anonymous> (/home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/server.ts:33:8)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (/home/baysick/Desktop/spotify/spotify-microservices/services/user-service/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/tmp/ts-node-dev-hook-013350942041538083.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (/tmp/ts-node-dev-hook-013350942041538083.js:71:20)
+[ERROR] 02:00:42 Error: listen EADDRINUSE: address already in use :::5000
+[INFO] 02:01:04 Restarting: /home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/controller/auth.controller.ts has been modified
+Allowed origin: http://localhost:5173
+Server is running on port 5000
+connection successful
+[INFO] 02:04:17 Restarting: /home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/controller/auth.controller.ts has been modified
+Allowed origin: http://localhost:5173
+Error: listen EADDRINUSE: address already in use :::5000
+    at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+    at listenInCluster (node:net:1996:12)
+    at Server.listen (node:net:2101:7)
+    at Function.listen (/home/baysick/Desktop/spotify/spotify-microservices/services/user-service/node_modules/express/lib/application.js:635:24)
+    at Object.<anonymous> (/home/baysick/Desktop/spotify/spotify-microservices/services/user-service/src/server.ts:33:8)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1734:14)
+    at Module._compile (/home/baysick/Desktop/spotify/spotify-microservices/services/user-service/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/tmp/ts-node-dev-hook-013350942041538083.js:69:33)
+    at loadTS (node:internal/modules/cjs/loader:1826:10)
+    at require.extensions.<computed> (/tmp/ts-node-dev-hook-013350942041538083.js:71:20)
+[ERROR] 02:04:18 Error: listen EADDRINUSE: address already in use :::5000
