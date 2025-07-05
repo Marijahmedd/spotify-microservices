@@ -1,6 +1,7 @@
 import { useMusicStore } from "@/store/useMusicStore";
 import FeaturedGridSkeleton from "@/components/skeletons/FeaturedGridSkeleton";
 import PlayButton from "./PlayButton";
+const CLOUDFRONT_URL = import.meta.env.VITE_CLOUDFRONT_URL;
 
 const FeaturedSection = () => {
   const { isLoading, featuredSongs, error } = useMusicStore();
@@ -18,7 +19,7 @@ const FeaturedSection = () => {
          hover:bg-zinc-700/50 transition-colors group cursor-pointer relative"
         >
           <img
-            src={song.imageUrl}
+            src={`${CLOUDFRONT_URL}/${song.imageUrl}`}
             alt={song.title}
             className="w-16 sm:w-20 h-16 sm:h-20 object-cover flex-shrink-0"
           />

@@ -4,11 +4,12 @@ import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
 import ForgotPasswordPage from "@/pages/ForgotPassword";
 import PasswordResetPage from "@/pages/PasswordResetPage";
-import Dashboard from "@/pages/Dashboard";
 import NotFound from "@/pages/NotFound";
 import ProtectedRoute from "@/components/routes/ProtectedRoutes";
 import MainLayout from "@/layouts/MainLayout";
 import AlbumPage from "./pages/album/AlbumPage";
+import AdminDashboard from "./pages/adminDashboard/AdminDashboard";
+import ProfilePage from "./pages/profile/ProfilePage";
 
 function App() {
   return (
@@ -18,14 +19,22 @@ function App() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/album/:albumId" element={<AlbumPage />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute allowedRoles={["admin", "user"]}>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
         </Route>
 
         {/* Dashboard NOT wrapped with MainLayout */}
         <Route
-          path="/dashboard"
+          path="/admin"
           element={
-            <ProtectedRoute allowedRoles={["user"]}>
-              <Dashboard />
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <AdminDashboard />
             </ProtectedRoute>
           }
         />

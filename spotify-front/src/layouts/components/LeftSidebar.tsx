@@ -3,7 +3,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useMusicStore } from "@/store/useMusicStore";
-import { HomeIcon, Library, MessageCircle } from "lucide-react";
+import { HomeIcon, Library, User } from "lucide-react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 const CLOUDFRONT_URL = import.meta.env.VITE_CLOUDFRONT_URL;
@@ -36,7 +36,7 @@ const LeftSidebar = () => {
           </Link>
 
           <Link
-            to={"/chat"}
+            to={"/Profile"}
             className={cn(
               buttonVariants({
                 variant: "ghost",
@@ -44,8 +44,8 @@ const LeftSidebar = () => {
               })
             )}
           >
-            <MessageCircle className="mr-2 size-5" />
-            <span className="hidden md:inline">Messages</span>
+            <User className="mr-2 size-5" />
+            <span className="hidden md:inline">Profile</span>
           </Link>
         </div>
       </div>
@@ -55,7 +55,7 @@ const LeftSidebar = () => {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center text-white px-2">
             <Library className="size-5 mr-2" />
-            <span className="hidden md:inline">Playlists</span>
+            <span className="hidden md:inline">Albums</span>
           </div>
         </div>
 

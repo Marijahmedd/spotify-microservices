@@ -141,7 +141,9 @@ const AlbumPage = () => {
 
                         <div className="flex items-center gap-3">
                           <img
-                            src={song.imageUrl || currentAlbum.thumbnailUrl}
+                            src={`${import.meta.env.VITE_CLOUDFRONT_URL}/${
+                              song.imageUrl
+                            }`}
                             alt={song.title}
                             className="size-10"
                           />

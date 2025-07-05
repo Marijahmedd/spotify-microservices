@@ -69,7 +69,9 @@ export const PlaybackControls = () => {
           {currentSong && (
             <>
               <img
-                src={currentSong.imageUrl}
+                src={`${import.meta.env.VITE_CLOUDFRONT_URL}/${
+                  currentSong.imageUrl
+                }`}
                 alt={currentSong.title}
                 className="w-14 h-14 object-cover rounded-md"
               />

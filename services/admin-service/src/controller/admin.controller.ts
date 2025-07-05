@@ -242,6 +242,29 @@ export const deleteSong = async (req: Request, res: Response) => {
     return;
   }
 };
+
+export const getAllSongs = async (req: Request, res: Response) => {
+  try {
+    const songs = await prisma.song.findMany({
+      orderBy: { createdAt: "desc" },
+      select: {
+        id: true,
+        title: true,
+        artist: true,
+        imageUrl: true,
+        createdAt: true,
+        duration: true,
+      },
+    });
+
+    res.status(200).json({ songs });
+    return;
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+    return;
+  }
+};
 export const getSongsOfAlbums = async (req: Request, res: Response) => {
   const albumId = req.params.id;
   const album = await prisma.album.findUnique({ where: { id: albumId } });
