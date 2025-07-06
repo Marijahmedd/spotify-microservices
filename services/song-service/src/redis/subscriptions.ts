@@ -43,6 +43,7 @@ export const registerRedisSubscriptions = () => {
           console.log("Received album:deleted event:", data);
           await redisClient.del("albums:all");
           await redisClient.del(`album:${data.albumId}`);
+          await redisClient.del("songs:all");
           break;
 
         default:

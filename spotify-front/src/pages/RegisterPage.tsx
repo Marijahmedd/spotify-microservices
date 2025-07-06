@@ -22,7 +22,7 @@ const RegisterPage = () => {
 
   const onSubmit = async (data: RegisterFormInputs) => {
     try {
-      const res = await usersApi.post("/register", data);
+      await usersApi.post("/register", data);
       toast.success("Registered successfully!");
       navigate("/login");
     } catch (err: any) {

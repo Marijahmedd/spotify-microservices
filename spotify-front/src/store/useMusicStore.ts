@@ -1,9 +1,9 @@
 import { songsApi } from "@/api/songsApi";
-import { usersApi } from "@/api/usersApi";
 import type { Album, FullAlbum, Song, Stats } from "@/types";
-import toast from "react-hot-toast";
 import { create } from "zustand";
-
+const numberOfFeaturedSongs = 6;
+const numberOfTrendingSongs = 4;
+const numberOfMadeForYouSongs = 4;
 interface MusicStore {
   songs: Song[];
   albums: Album[];
@@ -21,13 +21,10 @@ interface MusicStore {
   fetchFeaturedSongs: () => Promise<void>;
   fetchMadeForYouSongs: () => Promise<void>;
   fetchTrendingSongs: () => Promise<void>;
-  fetchStats: () => Promise<void>;
   fetchSongs: () => Promise<void>;
-  deleteSong: (id: string) => Promise<void>;
-  deleteAlbum: (id: string) => Promise<void>;
 }
 
-export const useMusicStore = create<MusicStore>((set) => ({
+export const useMusicStore = create<MusicStore>((set, get) => ({
   albums: [],
   songs: [],
   isLoading: false,
@@ -43,60 +40,11 @@ export const useMusicStore = create<MusicStore>((set) => ({
     totalArtists: 0,
   },
 
-  deleteSong: async (id) => {
-    set({ isLoading: true, error: null });
-    try {
-      await usersApi.delete(`/admin/songs/${id}`);
-
-      set((state) => ({
-        songs: state.songs.filter((song) => song.id !== id),
-      }));
-      toast.success("Song deleted successfully");
-    } catch (error: any) {
-      console.log("Error in deleteSong", error);
-      toast.error("Error deleting song");
-    } finally {
-      set({ isLoading: false });
-    }
-  },
-
-  deleteAlbum: async (id) => {
-    set({ isLoading: true, error: null });
-    try {
-      await usersApi.delete(`/admin/albums/${id}`);
-      set((state) => ({
-        albums: state.albums.filter((album) => album.id !== id),
-        songs: state.songs.map((song) =>
-          song.albumId === state.albums.find((a) => a.id === id)?.name
-            ? { ...song, album: null }
-            : song
-        ),
-      }));
-      toast.success("Album deleted successfully");
-    } catch (error: any) {
-      toast.error("Failed to delete album: " + error.message);
-    } finally {
-      set({ isLoading: false });
-    }
-  },
-
   fetchSongs: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response = await songsApi.get("/songs");
+      const response = await songsApi.get("/");
       set({ songs: response.data });
-    } catch (error: any) {
-      set({ error: error.message });
-    } finally {
-      set({ isLoading: false });
-    }
-  },
-
-  fetchStats: async () => {
-    set({ isLoading: true, error: null });
-    try {
-      const response = await usersApi.get("/stats");
-      set({ stats: response.data });
     } catch (error: any) {
       set({ error: error.message });
     } finally {
@@ -106,13 +54,11 @@ export const useMusicStore = create<MusicStore>((set) => ({
 
   fetchAlbums: async () => {
     set({ isLoading: true, error: null });
-
     try {
       const response = await songsApi.get("/album");
       const albums = Array.isArray(response.data.albums)
         ? response.data.albums
         : [];
-
       set({ albums });
     } catch (error: any) {
       set({ error: error?.response?.data?.message });
@@ -125,12 +71,10 @@ export const useMusicStore = create<MusicStore>((set) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await songsApi.get(`/album/${id}`);
-
       const album = {
         ...response.data.album,
         songs: response.data.songs,
       };
-
       set({ currentAlbum: album });
     } catch (error: any) {
       set({ error: error.response.data.message });
@@ -140,39 +84,32 @@ export const useMusicStore = create<MusicStore>((set) => ({
   },
 
   fetchFeaturedSongs: async () => {
-    set({ isLoading: true, error: null });
-    try {
-      const response = await songsApi.get("/");
-      set({ featuredSongs: response.data });
-      console.log(response);
-    } catch (error: any) {
-      set({ error: error.response.data.message });
-    } finally {
-      set({ isLoading: false });
+    const songs = get().songs;
+    if (!songs || songs.length === 0) {
+      await get().fetchSongs();
     }
+    const allSongs = get().songs;
+    const shuffled = [...allSongs].sort(() => 0.5 - Math.random());
+    set({ featuredSongs: shuffled.slice(0, numberOfFeaturedSongs) });
   },
 
   fetchMadeForYouSongs: async () => {
-    set({ isLoading: true, error: null });
-    try {
-      const response = await songsApi.get("/");
-      set({ madeForYouSongs: response.data });
-    } catch (error: any) {
-      set({ error: error.response.data.message });
-    } finally {
-      set({ isLoading: false });
+    const songs = get().songs;
+    if (!songs || songs.length === 0) {
+      await get().fetchSongs();
     }
+    const allSongs = get().songs;
+    const shuffled = [...allSongs].sort(() => 0.5 - Math.random());
+    set({ madeForYouSongs: shuffled.slice(0, numberOfMadeForYouSongs) });
   },
 
   fetchTrendingSongs: async () => {
-    set({ isLoading: true, error: null });
-    try {
-      const response = await songsApi.get("/");
-      set({ trendingSongs: response.data });
-    } catch (error: any) {
-      set({ error: error.response.data.message });
-    } finally {
-      set({ isLoading: false });
+    const songs = get().songs;
+    if (!songs || songs.length === 0) {
+      await get().fetchSongs();
     }
+    const allSongs = get().songs;
+    const shuffled = [...allSongs].sort(() => 0.5 - Math.random());
+    set({ trendingSongs: shuffled.slice(0, numberOfTrendingSongs) });
   },
 }));
