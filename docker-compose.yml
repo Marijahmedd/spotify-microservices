@@ -4,4 +4,39 @@ services:
     image: redis
     ports:
       - "6379:6379"
+    networks:
+      - spotify-network
 
+  admin-service:
+    image: spotify-admin-service:latest
+    ports:
+      - "5001:5001"
+    env_file:
+      - ./services/admin-service/.env
+    depends_on:
+      - redis
+    networks:
+      - spotify-network
+
+  song-service:
+    image: spotify-song-service:latest
+    ports:
+      - "7000:7000"
+    env_file:
+      - ./services/song-service/.env
+    depends_on:
+      - redis
+    networks:
+      - spotify-network
+
+  user-service:
+    image: spotify-user-service:latest
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./services/user-service/.env
+    networks:
+      - spotify-network
+networks:
+  spotify-network:
+    driver: bridge
