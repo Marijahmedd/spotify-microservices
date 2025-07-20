@@ -4,3 +4,6 @@ dist
 Dockerfile
 node_modules/
 src/keys/cloudfront-private-key.pem
+*.yaml
+*.pem
+secret.yaml

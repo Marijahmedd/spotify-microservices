@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-service-deployment
+  namespace: spotify
+  labels:
+    app: admin-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admin-service
+  template:
+    metadata:
+      labels:
+        app: admin-service
+    spec:
+      containers:
+      - name: admin-service-container
+        image: marijahmed/spotify-admin-service:latest
+        ports:
+        - containerPort: 5001
+        envFrom:
+        - secretRef:
+            name: admin-service-secret
+        - secretRef:
+            name: shared-secret

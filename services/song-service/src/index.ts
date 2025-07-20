@@ -10,13 +10,12 @@ import { registerRedisSubscriptions } from "./redis/subscriptions";
 const fastify = Fastify({ logger: true });
 
 // Register Routes
-registerRedisSubscriptions();
-fastify.register(songRoutes, { prefix: "/api/song" });
+
 
 const start = async () => {
   try {
     await fastify.register(cors, {
-      origin: "http://localhost:5173", // Or restrict to a domain like "http://localhost:5173"
+      origin: process.env.BASE_URL, // Or restrict to a domain like "http://localhost:5173"
       credentials: true,
     });
     await fastify.listen({
@@ -29,5 +28,8 @@ const start = async () => {
     process.exit(1);
   }
 };
+
+registerRedisSubscriptions();
+fastify.register(songRoutes, { prefix: "/api/song" });
 
 start();
