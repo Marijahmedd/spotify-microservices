@@ -18,6 +18,13 @@ spec:
       containers:
       - name: song-service-container
         image: marijahmed/spotify-song-service:latest
+        resources:
+          requests:
+            memory: "200Mi"
+            cpu: "200m"
+          limits:
+            memory: "700Mi"
+            cpu: "700m"
         ports:
         - containerPort: 7000
         envFrom:
