@@ -1,6 +1,11 @@
 
 image: sleavely/node-awscli:22.x
 
+stages:
+  - build
+  - push_to_s3
+  - invalidate_cache
+
 build:
   stage: build
   script:
