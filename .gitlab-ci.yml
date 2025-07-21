@@ -1,0 +1,32 @@
+include: 
+    - local: '/pipelines/frontend.yml'
+      rules:
+          - changes: 
+              - spotify-front/**/*
+              
+
+    - local: '/pipelines/user-service.yml'
+      rules:
+          - changes: 
+              - services/user-service/**/*       
+
+
+    - local: '/pipelines/admin-service.yml'
+      rules:
+          - changes: 
+              - services/admin-service/**/*  
+
+
+    - local: '/pipelines/song-service.yml'
+      rules:
+          - changes: 
+              - services/song-service/**/*  
+
+stages:
+ - build
+
+
+test-build:
+    stage: build
+    script:
+        - echo "test build"
