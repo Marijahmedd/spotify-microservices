@@ -15,10 +15,5 @@ build_docker_image:
   script:
     - cd services/song-service
     - docker build -t $IMAGE_NAME:${CI_COMMIT_SHORT_SHA} .
-
-push_to_dockerhub:
-  stage: dockerize
-  needs: ["build_docker_image"]
-  script:
     - echo "$DOCKERHUB_TOKEN" | docker login -u "marijahmed" --password-stdin
     - docker push $IMAGE_NAME:${CI_COMMIT_SHORT_SHA}
