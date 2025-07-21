@@ -1,6 +1,6 @@
 images:
   spotify-user-service:
-    tag: "latest"
+    tag: "50f3ce3c"
   spotify-admin-service:
     tag: "latest"
   spotify-song-service:
