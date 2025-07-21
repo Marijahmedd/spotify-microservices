@@ -12,14 +12,20 @@ build:
     - cd spotify-front
     - npm install
     - npm run build
+  artifacts:
+    paths:
+      - spotify-front/dist
   rules:
     - changes:
         - spotify-front/**/*
+    
 
 push-to-s3:
   stage: push_to_s3
   script:
+    - ls 
     - cd spotify-front
+    - ls
     - aws s3 sync ./dist/ s3://spotify-frontend-marij --delete
   needs: ["build"]
 
