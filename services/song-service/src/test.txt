@@ -1,1 +1,1 @@
-testing yq in pipelines
+testing custom yq image
