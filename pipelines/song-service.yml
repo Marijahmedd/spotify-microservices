@@ -18,8 +18,8 @@ Build Docker Image:
 
 Push Docker Image:
   stage: push to docker hub
+  needs: [Build Docker Image]
   script:
     - echo "$DOCKERHUB_TOKEN" | docker login -u "marijahmed" --password-stdin
     - docker push spotify-song-service:${CI_COMMIT_SHORT_SHA}
-
 
