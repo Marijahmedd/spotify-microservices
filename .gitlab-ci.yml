@@ -4,7 +4,7 @@ image: sleavely/node-awscli:22.x
 stages:
   - build
   - push_to_s3
-  # - invalidate_cache
+  - invalidate_cache
 
 build:
   stage: build
@@ -29,8 +29,8 @@ push-to-s3:
     - aws s3 sync ./dist/ s3://spotify-frontend-marij --delete
   needs: ["build"]
 
-# invalidate-cache:
-#   stage: invalidate_cache
-#   script:
-#     - aws cloudfront create-invalidation --distribution-id E3LCVX33WASGDD --paths "/*"
-#   needs: ["push-to-s3"]
+invalidate-cache:
+  stage: invalidate_cache
+  script:
+    - aws cloudfront create-invalidation --distribution-id E3LCVX33WASGDD --paths "/*"
+  needs: ["push-to-s3"]

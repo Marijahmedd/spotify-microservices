@@ -185,8 +185,14 @@ export const PlaybackControls = () => {
               onClick={() => {
                 if (volume > 0) {
                   setVolume(0);
+                  if (audioRef.current) {
+                    audioRef.current.volume = 0;
+                  }
                 } else if (volume === 0) {
                   setVolume(75);
+                  if (audioRef.current) {
+                    audioRef.current.volume = 75 / 100;
+                  }
                 }
               }}
             >
