@@ -6,7 +6,7 @@ trigger-frontend:
   stage: trigger
   trigger:
     include: 
-      - local: ./pipelines/frontend.yml
+      - local: pipelines/frontend.yml
     strategy: depend
   rules:
     - changes:
@@ -20,5 +20,5 @@ trigger-song-service:
     strategy: depend
   rules:
     - changes:
-        - ./services/song-service/**/*
+        - services/song-service/**/*
 
