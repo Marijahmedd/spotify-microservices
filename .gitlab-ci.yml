@@ -19,7 +19,8 @@ build:
 push-to-s3:
   stage: push_to_s3
   script:
-    - aws s3 sync ./spotify-front/dist/ s3://spotify-frontend-marij --delete
+    - cd spotify-front
+    - aws s3 sync ./dist/ s3://spotify-frontend-marij --delete
   needs: ["build"]
 
 invalidate-cache:
