@@ -15,6 +15,11 @@ jobs:
           git config --global user.name "muhammadmarijahmed"
           git config --global user.email "muhammadmarijahmed@gmail.com"
           git remote set-url origin https://oauth2:${{ secrets.GITLAB_TOKEN }}@gitlab.com/mmarijahmed/spotify-microservices.git
+
+      - name: pull from Gitlab
+        run: |
+          git pull origin main --allow-unrelated-histories
+          
       - name: Push to GitLab
         run: |
           git push --all origin
