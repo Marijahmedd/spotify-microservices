@@ -1,9 +1,7 @@
 stages:
   - dockerize
   - update_helm
-image: docker:24.0.5
-services:
-  - docker:24.0.5-dind
+
 
 variables:
   DOCKER_TLS_CERTDIR: "/certs"
@@ -11,6 +9,9 @@ variables:
 
 
 build_docker_image:
+  image: docker:24.0.5
+  services:
+  - docker:24.0.5-dind
   stage: dockerize
   script:
     - cd services/song-service
@@ -19,13 +20,18 @@ build_docker_image:
     - docker push $IMAGE_NAME:${CI_COMMIT_SHORT_SHA}
 
 github_clone:
+  image: ubuntu:22.04
   stage: update_helm
   script:
+    - set -e
     - git config user.name "Marijahmedd"
     - git config user.email "muhammadmarijahmed@gmail.com"
     - git clone https://${GITHUB_TOKEN}@github.com/Marijahmedd/spotify-microservices.git
     - cd spotify-microservices
     - sudo add-apt-repository ppa:rmescandon/yq
-    - sudo apt-get install yq
+    - sudo apt-get update
+    - sudo apt-get install yq -y
     - yq -i '.images.spotify-song-service.tag = "'${CI_COMMIT_SHORT_SHA}'"' helm/spotify-services/values.yaml
+    - git add helm/spotify-services/values.yaml
+    - git commit -m "Update song service image tag to ${CI_COMMIT_SHORT_SHA}"
     - git push origin main
