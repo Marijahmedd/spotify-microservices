@@ -1,8 +1,21 @@
 stages:
-  - test
+  - dockerize
+  - push to docker hub
 
 
-test:
-  stage: test
+image: dind:latest
+
+
+Build Docker Image:
+  stage: dockerize
   script:
-    - echo "Running tests..."
+    - cd services/song-service
+    - docker build -t spotify-song-service:${CI_COMMIT_SHORT_SHA} .
+
+Push Docker Image:
+  stage: push to docker hub
+  script:
+    - echo "$DOCKERHUB_TOKEN" | docker login -u "marijahmed" --password-stdin
+    - docker push spotify-song-service:${CI_COMMIT_SHORT_SHA}
+
+
