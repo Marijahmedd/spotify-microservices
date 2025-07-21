@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service-deployment
+  namespace: spotify
+  labels:
+    app: user-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - user-service
+              topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: user-service-container
+        image: marijahmed/spotify-user-service:{{.Values.images.spotify-user-service.tag}}
+        resources: 
+          requests:
+            cpu: "100m"
+            memory: "200Mi"
+          limits: 
+            cpu: "500m" 
+            memory: "512Mi"  
+
+
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - secretRef:
+            name: user-service-secret
+        - secretRef:
+            name: shared-secret
