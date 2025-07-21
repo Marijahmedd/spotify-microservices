@@ -16,7 +16,7 @@ trigger-song-service:
   stage: trigger
   trigger:
     include:
-      - local: ./pipelines/song-service.yml
+      - local: pipelines/song-service.yml
     strategy: depend
   rules:
     - changes:
