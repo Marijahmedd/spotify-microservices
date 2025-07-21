@@ -6,4 +6,4 @@ images:
     tag: "latest"
     pullPolicy: Always
   spotify-song-service:
-    tag: "latest"
+    tag: "186a975c"
