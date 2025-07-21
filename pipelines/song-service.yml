@@ -1,25 +1,27 @@
 stages:
   - dockerize
-  - push to docker hub
+  - push_to_dockerhub
 
 image: docker:24.0.5
 services:
   - docker:24.0.5-dind
-before_script:
-  - docker info
+
 variables:
   DOCKER_TLS_CERTDIR: "/certs"
+  IMAGE_NAME: marijahmed/spotify-song-service
 
-Build Docker Image:
+before_script:
+  - docker info
+
+build_docker_image:
   stage: dockerize
   script:
     - cd services/song-service
-    - docker build -t spotify-song-service:${CI_COMMIT_SHORT_SHA} .
+    - docker build -t $IMAGE_NAME:${CI_COMMIT_SHORT_SHA} .
 
-Push Docker Image:
-  stage: push to docker hub
-  needs: [Build Docker Image]
+push_docker_image:
+  stage: push_to_dockerhub
+  needs: [build_docker_image]
   script:
     - echo "$DOCKERHUB_TOKEN" | docker login -u "marijahmed" --password-stdin
-    - docker push spotify-song-service:${CI_COMMIT_SHORT_SHA}
-
+    - docker push $IMAGE_NAME:${CI_COMMIT_SHORT_SHA}
