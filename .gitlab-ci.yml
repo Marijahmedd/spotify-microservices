@@ -12,13 +12,13 @@ trigger-frontend:
     - changes:
         - spotify-front/**/*
 
-trigger-backend:
+trigger-song-service:
   stage: trigger
   trigger:
     include:
-      ./pipelines/backend.yml
+      ./pipelines/song-service.yml
     strategy: depend
   rules:
     - changes:
-        - spotify-back/**/* 
+        - ./services/song-service/**/*
 
