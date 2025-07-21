@@ -1,40 +1,24 @@
-#frontend
-image: sleavely/node-awscli:22.x
-
 stages:
-  - build
-  - push_to_s3
-  - invalidate_cache
+  - trigger
 
-build:
-  stage: build
-  script:
-    - cd spotify-front
-    - npm install
-    - npm run build
-  artifacts:
-    paths:
-      - spotify-front/dist
+
+trigger-frontend:
+  stage: trigger
+  trigger:
+    include: 
+      ./pipelines/frontend.yml
+    strategy: depend
   rules:
     - changes:
         - spotify-front/**/*
-    
 
-push-to-s3:
-  stage: push_to_s3
-  script:
-    - cd spotify-front
-    - aws s3 sync ./dist/ s3://spotify-frontend-marij --delete
+trigger-backend:
+  stage: trigger
+  trigger:
+    include:
+      ./pipelines/backend.yml
+    strategy: depend
   rules:
     - changes:
-        - spotify-front/**/*
-  needs: ["build"]
+        - spotify-back/**/* 
 
-invalidate-cache:
-  stage: invalidate_cache
-  script:
-    - aws cloudfront create-invalidation --distribution-id E3LCVX33WASGDD --paths "/*"
-  rules:
-      - changes:
-          - spotify-front/**/* 
-  needs: ["push-to-s3"]
