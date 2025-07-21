@@ -12,6 +12,7 @@ import {
   SkipBack,
   SkipForward,
   Volume1,
+  VolumeOff
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
@@ -181,8 +182,19 @@ export const PlaybackControls = () => {
               size="icon"
               variant="ghost"
               className="hover:text-white text-zinc-400"
+              onClick={() => {
+                if (volume > 0) {
+                  setVolume(0);
+                } else if (volume === 0) {
+                  setVolume(75);
+                }
+              }}
             >
-              <Volume1 className="h-4 w-4" />
+              {volume > 0 ? (
+                <Volume1 className="h-4 w-4" />
+              ) : ( 
+                <VolumeOff className="h-4 w-4" />
+              )}
             </Button>
 
             <Slider
