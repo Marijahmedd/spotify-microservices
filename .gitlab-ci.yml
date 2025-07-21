@@ -5,10 +5,10 @@ include:
               - spotify-front/**/*
               
 
-    - local: '/pipelines/user-service.yml'
-      rules:
-          - changes: 
-              - services/user-service/**/*       
+    # - local: '/pipelines/user-service.yml'
+    #   rules:
+    #       - changes: 
+    #           - services/user-service/**/*       
 
 
     # - local: '/pipelines/admin-service.yml'

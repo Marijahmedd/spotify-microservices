@@ -23,3 +23,6 @@ invalidate-cache:
     - aws cloudfront create-invalidation --distribution-id E3LCVX33WASGDD --paths "/*"
   
 
+rules:
+  - changes:
+      - spotify-front/**/*
