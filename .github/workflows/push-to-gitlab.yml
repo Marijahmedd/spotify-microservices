@@ -18,8 +18,7 @@ jobs:
 
       - name: pull from Gitlab
         run: |
-          git merge --no-ff
-          git pull 
+          git pull --rebase
 
       - name: Push to GitLab
         run: |
