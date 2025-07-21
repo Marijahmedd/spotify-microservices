@@ -22,3 +22,14 @@ trigger-song-service:
     - changes:
         - services/song-service/**/*
 
+
+trigger-user-service:
+  stage: trigger
+  trigger:
+    include:
+      - local: pipelines/user-service.yml
+    strategy: depend
+  rules:
+    - changes:
+        - services/user-service/**/*
+

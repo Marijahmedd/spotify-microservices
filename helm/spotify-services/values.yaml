@@ -1,9 +1,7 @@
 images:
   spotify-user-service:
     tag: "latest"
-    pullPolicy: Always
   spotify-admin-service:
     tag: "latest"
-    pullPolicy: Always
   spotify-song-service:
     tag: "186a975c"
