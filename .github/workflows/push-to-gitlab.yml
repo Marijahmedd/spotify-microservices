@@ -18,5 +18,5 @@ jobs:
 
       - name: Push to GitLab
         run: |
-          git push --all origin
+          git push --force origin main
           git push --tags origin
