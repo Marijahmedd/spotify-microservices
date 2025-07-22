@@ -4,4 +4,4 @@ images:
   spotifyAdminService:
     tag: "latest"
   spotifySongService:
-    tag: "186a975c"
+    tag: "d212a48b"
