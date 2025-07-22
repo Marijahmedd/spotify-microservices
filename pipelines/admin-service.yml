@@ -1,23 +1,10 @@
 stages:
-  - trivy
   - dockerize
   - update_helm
 
-
 variables:
   DOCKER_TLS_CERTDIR: "/certs"
-  IMAGE_NAME: marijahmed/spotify-song-service
-
-trivy_scan:
-  stage: trivy-fs
-  image:
-    name: aquasec/trivy:latest
-    entrypoint: [""]
-  script:
-    - trivy fs --exit-code 1 --severity HIGH,CRITICAL .
-
-
-
+  IMAGE_NAME: marijahmed/spotify-admin-service
 
 build_docker_image:
   image: docker:24.0.5
@@ -25,7 +12,7 @@ build_docker_image:
   - docker:24.0.5-dind
   stage: dockerize
   script:
-    - cd services/song-service
+    - cd services/admin-service
     - docker build -t $IMAGE_NAME:${CI_COMMIT_SHORT_SHA} .
     - echo "$DOCKERHUB_TOKEN" | docker login -u "marijahmed" --password-stdin
     - docker push $IMAGE_NAME:${CI_COMMIT_SHORT_SHA}
@@ -39,7 +26,7 @@ github_clone:
     - git config --global user.email "muhammadmarijahmed@gmail.com"
     - git clone https://${GITHUB_TOKEN}@github.com/Marijahmedd/spotify-microservices.git
     - cd spotify-microservices
-    - yq -i '.images.spotifySongService.tag = "'${CI_COMMIT_SHORT_SHA}'"' helm/spotify-services/values.yaml
+    - yq -i '.images.spotifyAdminService.tag = "'${CI_COMMIT_SHORT_SHA}'"' helm/spotify-services/values.yaml
     - git add helm/spotify-services/values.yaml
-    - git commit -m "Update song service image tag to ${CI_COMMIT_SHORT_SHA}"
+    - git commit -m "Update admin service image tag to ${CI_COMMIT_SHORT_SHA}"
     - git push origin main

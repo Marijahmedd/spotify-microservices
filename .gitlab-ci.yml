@@ -33,3 +33,14 @@ trigger-user-service:
     - changes:
         - services/user-service/**/*
 
+
+trigger-admin-service:
+  stage: trigger
+  trigger:
+    include:
+      - local: pipelines/admin-service.yml
+    strategy: depend
+  rules:
+    - changes:
+        - services/admin-service/**/*
+
