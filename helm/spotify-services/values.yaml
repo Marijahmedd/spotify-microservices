@@ -2,6 +2,6 @@ images:
   spotifyUserService:
     tag: "50f3ce3c"
   spotifyAdminService:
-    tag: "latest"
+    tag: "9add1fba"
   spotifySongService:
     tag: "d212a48b"
