@@ -1,10 +1,21 @@
 stages:
+  - trivy-fs
   - dockerize
   - update_helm
+
 
 variables:
   DOCKER_TLS_CERTDIR: "/certs"
   IMAGE_NAME: marijahmed/spotify-admin-service
+
+trivy_scan:
+  stage: trivy-fs
+  image:
+    name: aquasec/trivy:latest
+    entrypoint: [""]
+  script:
+    - trivy fs --exit-code 1 --severity HIGH,CRITICAL services/admin-service
+  allow_failure: false
 
 build_docker_image:
   image: docker:24.0.5
