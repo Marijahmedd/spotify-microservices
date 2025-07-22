@@ -6,6 +6,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    kubernetes.io/ingress.regional-static-ip-name: "nginx-static-ip"
 spec:
   tls:
   - hosts:

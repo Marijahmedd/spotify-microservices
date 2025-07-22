@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: admin-service-container
-        image: marijahmed/spotify-admin-service:{{.Values.images.spotify-admin-service.tag}}
+        image: marijahmed/spotify-admin-service:{{.Values.images.spotifyAdminService.tag}}
         ports:
         - containerPort: 5001
         envFrom:

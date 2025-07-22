@@ -1,7 +1,7 @@
 images:
-  spotify-user-service:
+  spotifyUserService:
     tag: "50f3ce3c"
-  spotify-admin-service:
+  spotifyAdminService:
     tag: "latest"
-  spotify-song-service:
+  spotifySongService:
     tag: "186a975c"

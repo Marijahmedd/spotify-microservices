@@ -27,7 +27,7 @@ spec:
               topologyKey: "kubernetes.io/hostname"
       containers:
       - name: user-service-container
-        image: marijahmed/spotify-user-service:{{.Values.images.spotify-user-service.tag}}
+        image: marijahmed/spotify-user-service:{{.Values.images.spotifyUserService.tag}}
         resources: 
           requests:
             cpu: "100m"

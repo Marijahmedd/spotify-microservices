@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: song-service-container
-        image: marijahmed/spotify-song-service:{{.Values.images.spotify-song-service.tag}}
+        image: marijahmed/spotify-song-service:{{.Values.images.spotifySongService.tag}}
         resources:
           requests:
             memory: "200Mi"
