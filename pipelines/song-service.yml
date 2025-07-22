@@ -14,7 +14,8 @@ trivy_scan:
     name: aquasec/trivy:latest
     entrypoint: [""]
   script:
-    - trivy fs --exit-code 1 --severity HIGH,CRITICAL .
+    - trivy fs --exit-code 1 --severity HIGH,CRITICAL services/song-service
+  allow_failure: false
 
 
 
