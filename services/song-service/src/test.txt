@@ -1,2 +1,2 @@
 testing custom yq image2
-testing trivy
+testing trivy fs

@@ -1,5 +1,5 @@
 stages:
-  - trivy
+  - trivy-fs
   - dockerize
   - update_helm
 
