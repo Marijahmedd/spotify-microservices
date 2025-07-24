@@ -12,7 +12,7 @@ dotenv.config();
 const privateKey = process.env.CLOUDFRONT_PRIVATE_KEY!
 export function generateSignedCloudFrontUrl(key: string) {
   const fullUrl = `${process.env.CLOUDFRONT_DOMAIN}/${key}`;
-  console.log(fullUrl);
+  console.log("full song url before signing:", fullUrl);
   return getSignedUrl({
     url: fullUrl,
     keyPairId: process.env.CLOUDFRONT_KEY_PAIR_ID!,
