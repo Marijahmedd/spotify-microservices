@@ -4,4 +4,4 @@ images:
   spotifyAdminService:
     tag: "9add1fba"
   spotifySongService:
-    tag: "d212a48b"
+    tag: "dcec2944"
