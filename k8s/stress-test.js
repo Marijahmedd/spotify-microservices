@@ -7,7 +7,7 @@ export let options = {
 };
 
 export default function () {
-  let res = http.get('https://api.spotify.marij.me/api/song/stream/d9cb767a-346d-4682-8a88-3e9afd7c8748'); 
+  let res = http.get('https://api.spotify.marij.me/api/song/stream/698c538d-faa6-4c3d-9084-1dfadbf04d4a'); 
   check(res, {
     'status was 200': (r) => r.status === 200,
   });
