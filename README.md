@@ -57,6 +57,17 @@ Additional components: **Redis (Pub/Sub)**, **SQS + Lambda + SES**, **S3 + Cloud
 - Combines **global caching + TLS** delivery for minimal latency and maximum uptime.  
 - Significantly cheaper than running a frontend server — pay only for data transfer.
 
+### 7. Fastify vs Express Choice
+
+- **Song Service:** Uses **Fastify** because it handles **high-volume streaming**. Benchmarks show Fastify can handle **2–3x more requests per second** than Express, with lower memory usage and faster JSON serialization. This gives **higher throughput, lower latency**, and better CPU efficiency which is critical for serving thousands of concurrent users streaming audio.
+
+- **User & Admin Services:** Stick with **Express** because traffic is moderate and the complexity is lower. Fastify isn’t necessary here.  
+  **Reasons Express was better for these services:**
+  - **Mature middleware ecosystem:** User authentication, session handling, and DB CRUD have tons of existing Express middleware, making implementation faster and more robust.  
+
+
+
+
 ---
 
 ## ☁️ DevOps & Infrastructure
